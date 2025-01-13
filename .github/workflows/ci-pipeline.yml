@@ -36,24 +36,11 @@ jobs:
           with:
             name: backend-artifact
             path: ./backend-publish
-  
-    trigger_cd_pipeline:
-      needs: [build_frontend, build_backend]
-      runs-on: ubuntu-latest
-      steps:
-        - name: Trigger CD Pipeline
-          run: |
-            curl -X POST \
-              -H "Authorization: token ${{ secrets.BATMAN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/Neros5/parkndeploy/actions/workflows/cd-pipeline.yml/dispatches \
-              -d '{"ref":"main"}'
-        - uses: actions/checkout@v3
     
     call_deploy_workflow:    
         needs: [build_frontend, build_backend]
         permissions:
-            id-token: write # Require write permission to Fetch an OIDC token (required for federated credential)
+            id-token: write 
         uses: Neros5/parkndeploy/.github/workflows/cd-pipeline.yml@main
         secrets: inherit
         
