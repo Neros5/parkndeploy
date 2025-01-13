@@ -20,6 +20,9 @@ jobs:
       - name: Extract version from tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
+      - name: Pass version to React app
+        run: echo "REACT_APP_VERSION=${VERSION}" > ./frontend/.env
+
   deploy_infrastructure:
     runs-on: ubuntu-latest
     environment: production # bind the job to the production environment
