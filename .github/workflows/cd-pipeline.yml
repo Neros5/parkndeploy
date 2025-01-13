@@ -1,8 +1,11 @@
 on:
-  workflow_dispatch:
+  workflow_call:
 
 permissions:
   id-token: write
+
+env: 
+  AZURE_RG_NAME: ${{ vars.PROJECT_NAME }}-rg-${{ vars.AZURE_RESOURCE_IDENTIFIER }}
 
 jobs:
   deploy_infrastructure:
@@ -41,19 +44,21 @@ jobs:
         resourceGroupName: ${{ env.AZURE_RG_NAME }}
 
   download_frontend_artifact:
+        needs: deploy_infrastructure    
         runs-on: ubuntu-latest
         steps:
             - name: Download frontend artifact
               uses: actions/download-artifact@v3
               with:
-                name: frontend-artifact # Nom identique
+                name: frontend-artifact
                 path: ./frontend/build/
 
   download_backend_artifact:
+        needs: deploy_infrastructure
         runs-on: ubuntu-latest
         steps:
             - name: Download backend artifact
               uses: actions/download-artifact@v3
               with:
-                name: backend-artifact # Nom identique
+                name: backend-artifact
                 path: ./backend-publish/
