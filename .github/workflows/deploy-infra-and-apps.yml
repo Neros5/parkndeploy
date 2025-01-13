@@ -18,10 +18,9 @@ jobs:
 
     steps:
       - name: Extract version from tag
-        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        run: echo "`jq '.version="${{ github.ref_name }}"'package.json`" > package.json
+        working-directory: ./frontend
 
-      - name: Pass version to React app
-        run: echo "REACT_APP_VERSION=${VERSION}" > ./frontend/.env
 
   deploy_infrastructure:
     runs-on: ubuntu-latest

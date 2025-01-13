@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="flex flex-col gap-5 items-center">
-      <h1>App Version: {process.env.REACT_APP_VERSION}</h1>
+      <h1>App Version: {APP_VERSION}</h1>
       <h1 className="text-2xl font-bold text-center">
         Where can I Park in Angers ? 👀
       </h1>
