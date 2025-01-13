@@ -18,7 +18,8 @@ jobs:
 
     steps:
       - name: Extract version from tag
-        run: echo "`jq '.version="${{ github.ref_name }}"'package.json`" > package.json
+        run: |
+          echo "`jq '.version="${{ github.ref_name }}"' package.json`" > package.json
         working-directory: ./frontend
 
 
